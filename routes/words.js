@@ -7,26 +7,90 @@ router.get('/', (req, res)=>{
 });
 
 router.get('/wotd', async (req, res)=>{
-    const data = await getwordfromdictionary();
-    res.render('wotd', data);
+    let wordData = await getwordfromdictionary();
+    res.render('wotd', wordData);
+});
+
+router.get('/allwords', async (req, res)=>{
+
+    try{
+
+        let data = await readFile('resources/allwords.txt', 'utf8');
+        let lines = data.split(/\r?\n/);
+        let words = [];
+
+        for(let i = 0; i < lines.length; i++){
+
+            let line = lines[i].trim();
+
+            if(line !== ''){
+
+                let parts = line.split(/\s+/);
+
+                let word = parts[0];
+                let part = parts[1];
+                let definition = parts.slice(2).join(' ');
+
+                words.push({
+                    word: word,
+                    part: part,
+                    definition: definition
+                });
+            }
+        }
+
+        words.sort(function(a, b){
+            if(a.word < b.word) return -1;
+            if(a.word > b.word) return 1;
+            return 0;
+        });
+
+        res.render('allwords', { words });
+
+    }
+    catch(err){
+        console.log(err);
+    }
+
 });
 
 module.exports = router;
 
-async function getwordfromdictionary(){
+let getwordfromdictionary = async ()=>{
+
     try{
-        const file = await readFile('./resources/allwords.txt','utf8');
 
-        const words = file.split('\n');
+        let data = await readFile('resources/allwords.txt', 'utf8');
+        let lines = data.split(/\r?\n/);
 
-        const randomLine =
-            words[Math.floor(Math.random() * words.length)];
+        let cleanLines = [];
 
-        const [word, part, definition] = randomLine.split('|');
+        for(let i = 0; i < lines.length; i++){
+            let line = lines[i].trim();
 
-        return { word, part, definition };
+            if(line !== ''){
+                cleanLines.push(line);
+            }
+        }
 
-    }catch(err){
+        let randomNumber = Math.floor(Math.random() * cleanLines.length);
+        let randomLine = cleanLines[randomNumber];
+
+        let parts = randomLine.split(/\s+/);
+
+        let word = parts[0];
+        let part = parts[1];
+        let definition = parts.slice(2).join(' ');
+
+        return {
+            word: word,
+            part: part,
+            definition: definition
+        };
+
+    }
+    catch(err){
         console.log(err);
     }
-}
+
+};

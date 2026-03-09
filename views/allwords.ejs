@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Words</title>
+</head>
+<body>
+    <h1>All Words in the Dictionary</h1>
+
+    <p>Here are all the words available in alphabetical order:</p>
+
+    <ul>
+        <% for(let i = 0; i < words.length; i++){ %>
+            <li>
+                <strong><%= words[i].word %></strong> - <%= words[i].part %><br>
+                <%= words[i].definition %>
+            </li>
+            <br>
+        <% } %>
+    </ul>
+</body>
+</html>;
