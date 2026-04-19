@@ -22,6 +22,20 @@ if (req.query.word && req.query.part && req.query.definition) {
 let userAnswer = req.query.answer;
 let isCorrect;
 
+let correctCount = parseInt(req.query.correctCount) || 0;
+let totalCount = parseInt(req.query.totalCount) || 0;
+
+if (userAnswer !== undefined) {
+    totalCount++;
+
+    if (userAnswer.trim().toLowerCase() === wordData.definition.trim().toLowerCase()) {
+        isCorrect = true;
+        correctCount++;
+    } else {
+        isCorrect = false;
+    }
+}
+
 if (userAnswer !== undefined) {
     isCorrect = userAnswer.trim().toLowerCase() === wordData.definition.trim().toLowerCase();
 }
@@ -30,7 +44,9 @@ res.render('wotd', {
     word: wordData.word,
     part: wordData.part,
     definition: wordData.definition,
-    isCorrect: isCorrect
+    isCorrect: isCorrect,
+    correctCount: correctCount,
+    totalCount: totalCount
 });
 });
 

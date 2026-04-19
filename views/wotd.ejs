@@ -17,6 +17,8 @@
     <input type="hidden" name="word" value="<%= word %>">
     <input type="hidden" name="part" value="<%= part %>">
     <input type="hidden" name="definition" value="<%= definition %>">
+    <input type="hidden" name="correctCount" value="<%= correctCount || 0 %>">
+    <input type="hidden" name="totalCount" value="<%= totalCount || 0 %>">
 
     <p>
         <label for="answer">Type the definition:</label>
@@ -38,6 +40,8 @@
         Correct definition: <%= definition %>
     </p>
 <% } %>
-
+<p>
+    Score: <%= correctCount %> / <%= totalCount %>
+</p>
 </body>
 </html>
