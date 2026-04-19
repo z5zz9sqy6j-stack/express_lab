@@ -13,7 +13,11 @@
 
     <p><strong><%= word %></strong> - <%= part %></p>
 
-   <form method="GET" action="/words/wotd">
+  <form method="GET" action="/words/wotd">
+    <input type="hidden" name="word" value="<%= word %>">
+    <input type="hidden" name="part" value="<%= part %>">
+    <input type="hidden" name="definition" value="<%= definition %>">
+
     <p>
         <label for="answer">Type the definition:</label>
         <input type="text" id="answer" name="answer">

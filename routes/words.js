@@ -7,7 +7,17 @@ router.get('/', (req, res)=>{
 });
 
 router.get('/wotd', async (req, res)=>{
-    let wordData = await getwordfromdictionary();
+    let wordData;
+
+if (req.query.word && req.query.part && req.query.definition) {
+    wordData = {
+        word: req.query.word,
+        part: req.query.part,
+        definition: req.query.definition
+    };
+} else {
+    wordData = await getwordfromdictionary();
+}
 
 let userAnswer = req.query.answer;
 let isCorrect;
