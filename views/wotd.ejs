@@ -28,5 +28,12 @@
         </span>
     </p>
 <% } %>
+
+<% if (isCorrect === false) { %>
+    <p>
+        Correct definition: <%= definition %>
+    </p>
+<% } %>
+
 </body>
 </html>
