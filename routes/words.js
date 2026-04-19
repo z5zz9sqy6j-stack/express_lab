@@ -8,7 +8,20 @@ router.get('/', (req, res)=>{
 
 router.get('/wotd', async (req, res)=>{
     let wordData = await getwordfromdictionary();
-    res.render('wotd', wordData);
+
+let userAnswer = req.query.answer;
+let isCorrect;
+
+if (userAnswer !== undefined) {
+    isCorrect = userAnswer.trim().toLowerCase() === wordData.definition.trim().toLowerCase();
+}
+
+res.render('wotd', {
+    word: wordData.word,
+    part: wordData.part,
+    definition: wordData.definition,
+    isCorrect: isCorrect
+});
 });
 
 router.get('/allwords', async (req, res)=>{

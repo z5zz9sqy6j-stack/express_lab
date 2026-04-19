@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Word of the Day</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <h1>Welcome to Jenil's Word of the Day</h1>
@@ -12,6 +13,20 @@
 
     <p><strong><%= word %></strong> - <%= part %></p>
 
-    <p><%= definition %></p>
+   <form method="GET" action="/words/wotd">
+    <p>
+        <label for="answer">Type the definition:</label>
+        <input type="text" id="answer" name="answer">
+        <button type="submit">Check Answer</button>
+    </p>
+</form>
+
+<% if (typeof isCorrect !== 'undefined') { %>
+    <p>
+        <span class="<%= isCorrect ? 'correct' : 'incorrect' %>">
+            <%= isCorrect ? 'Correct!' : 'Incorrect!' %>
+        </span>
+    </p>
+<% } %>
 </body>
 </html>
